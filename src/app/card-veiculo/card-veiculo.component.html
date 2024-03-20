@@ -1,29 +1,29 @@
 <section>
     <div class="img-container">
-        <img src="https://img.olx.com.br/images/30/300317824381804.jpg" alt="" srcset="">
+        <img src={{anuncio.fotosUrl[0]}} alt="" srcset="">
     </div>
 
     <div class="info">
         <div class="valor-box">
-            <span class="valor">R$37.500</span>
+            <span class="valor">{{anuncio.valor | currency: "BRL"}}</span>
         </div>
         <div class="detalhes">
-            <span class="modelo">Nissan March 2018 Preto</span>
+            <span class="modelo">{{anuncio.veiculo.modelo}}</span>
             <div class="principais-info">
                 <div class="principal-info">
                     <img src="assets/images/velocimetro.png" alt="" srcset="">
-                    <span>1.000 km</span>
+                    <span>{{anuncio.veiculo.kmRodados}} km</span>
                 </div>
                 <div class="principal-info">
                     <img src="assets/images/pincel.png" alt="" srcset="">
-                    <span>Preto</span>
+                    <span>{{anuncio.veiculo.cor}}</span>
                 </div>
                 <div class="principal-info">
                     <img src="assets/images/motor-de-carro.png" alt="" srcset="">
                     <span>1.0</span>
                 </div>
             </div>
-            <span class="Localidade">Mogi das Cruzes - SP</span>
+            <span class="Localidade">{{anuncio.anunciante.endereco.cidade}} - {{anuncio.anunciante.endereco.estado}}</span>
         </div>
     </div>
 </section>
