@@ -1,1 +1,18 @@
-<p>anunciar-veiculo works!</p>
+<form class="example-form">
+    <mat-form-field appearance="outline">
+        <mat-label>Modelo</mat-label>
+        <input matInput placeholder="Ex.: Corolla XEi 2014">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Marca</mat-label>
+        <input type="text" placeholder="Ex.: Toyota" aria-label="Number" matInput [formControl]="myControl"
+            [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{option.nome}}</mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+
+</form>
