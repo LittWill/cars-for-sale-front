@@ -10,7 +10,10 @@
             [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
             @for (option of filteredOptions | async; track option) {
-            <mat-option [value]="option">{{option.nome}}</mat-option>
+            <mat-option class="option" [value]="option">
+                <span>{{option.nome}}</span>
+                <span><img width="48" height="48" src={{option.fotoUrl}} alt="" srcset=""></span>
+            </mat-option>
             }
         </mat-autocomplete>
     </mat-form-field>
