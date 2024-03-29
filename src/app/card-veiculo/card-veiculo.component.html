@@ -1,11 +1,11 @@
 <section>
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" *ngFor="let imagem of anuncio.fotosUrl; let i = index" [class.active]="i === 0"></li>
+          <li data-target="#carouselExampleIndicators" *ngFor="let imagem of anuncio.fotos; let i = index" [class.active]="i === 0"></li>
         </ol>
         <div class="carousel-inner">
 
-          <div class="carousel-item active" *ngFor="let imagem of anuncio.fotosUrl; let i = index" [class.active]="i === 0">
+          <div class="carousel-item active" *ngFor="let imagem of anuncio.fotos; let i = index" [class.active]="i === 0">
             <img class="d-block w-100" src={{imagem}} alt="Primeiro Slide">
           </div>
         </div>

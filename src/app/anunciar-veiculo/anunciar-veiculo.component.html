@@ -11,7 +11,7 @@
         <input type="text" placeholder="Ex.: Toyota" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="marca">
         <mat-autocomplete #auto="matAutocomplete">
             @for (option of filteredOptions | async; track option) {
-            <mat-option class="option" [value]="option">
+            <mat-option class="option" [value]="option.id">
                 <span>{{option.nome}}</span>
                 <span><img width="48" height="48" src={{option.fotoUrl}} alt="" srcset=""></span>
             </mat-option>
@@ -36,7 +36,7 @@
 
     <mat-form-field>
         <mat-label>Combustível</mat-label>
-        <mat-select formControlName="combustivel">
+        <mat-select formControlName="combustivel" value="GASOLINA">
           <mat-option value="GASOLINA">Gasolina</mat-option>
           <mat-option value="FLEX">Flex</mat-option>
           <mat-option value="DIESEL">Diesel</mat-option>
@@ -47,7 +47,7 @@
 
       <mat-form-field>
         <mat-label>Cor</mat-label>
-        <mat-select formControlName="cor">
+        <mat-select formControlName="cor" value="Preto">
           <mat-option value="Preto">Preto</mat-option>
           <mat-option value="Branco">Branco</mat-option>
           <mat-option value="Cinza">Cinza</mat-option>
@@ -62,20 +62,20 @@
 
       <mat-form-field floatLabel="always">
         <mat-label>Valor</mat-label>
-        <input matInput type="number" class="example-right-align" placeholder="0" max="100" formControlName="valor">
+        <input matInput type="number" class="example-right-align" placeholder="0" formControlName="valor">
         <span matTextPrefix>R$&nbsp;</span>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Desejo</mat-label>
-        <mat-select formControlName="tipoNegociacao">
-          <mat-option value="VENDER">Vender</mat-option>
-          <mat-option value="TROCAR">Trocar</mat-option>
+        <mat-select formControlName="tipoNegociacao" value="VENDA">
+          <mat-option value="VENDA">Venda</mat-option>
+          <mat-option value="TROCA">Troca</mat-option>
           <mat-option value="AMBOS">Ambos</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <input type="file" name="" id="" multiple="true" (change)="uploadFile($event)" formControlName="fotos">
+      <input type="file" multiple (change)="uploadFile($event)" formControlName="fotos">
 
       <button type="submit">Anunciar</button>
 

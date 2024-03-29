@@ -2,8 +2,8 @@ export interface AnuncioRequest {
     veiculo: VeiculoRequest
     valor: number
     descricao: string,
-    tipoNegociacao: string
-    fotos : File[]
+    tipoNegociacao: string,
+    fotos: string[]
     
 }
 

@@ -21,29 +21,29 @@ import { AnuncioServiceService } from '../services/anuncio-service.service';
 })
 export class AnunciarVeiculoComponent {
   marcas: MarcaResponse[] = [];
-  formularioAnuncio : FormGroup
+  formularioAnuncio: FormGroup
   options: MarcaResponse[] = [];
   anuncioRequest !: AnuncioRequest
 
   filteredOptions: Observable<MarcaResponse[]>;
 
-  constructor(private marcaService: MarcaService, private formBuilder: FormBuilder, private anuncioService : AnuncioServiceService) {
+  constructor(private marcaService: MarcaService, private formBuilder: FormBuilder, private anuncioService: AnuncioServiceService) {
 
     this.formularioAnuncio = this.formBuilder.group({
-      marca: ['', [Validators.required]],
-      modelo: ['', [Validators.required]],
-      quilometragem: ['', [Validators.required]],
-      ano: ['', [Validators.required]],
-      combustivel: ['', [Validators.required]],
-      cor: ['', [Validators.required]],
-      valor: ['', [Validators.required]],
-      tipoNegociacao: ['', [Validators.required]],
-      fotos: [File, [Validators.required]]
+      marca: ['0d9c3406-a3cc-408b-9ab1-6ae9fd8b7c1b', [Validators.required]],
+      modelo: ['teste', [Validators.required]],
+      quilometragem: ['25000', [Validators.required]],
+      ano: ['2014', [Validators.required]],
+      combustivel: ['GASOLINA', [Validators.required]],
+      cor: ['Preto', [Validators.required]],
+      valor: ['40000', [Validators.required]],
+      tipoNegociacao: ['VENDA', [Validators.required]],
+      fotos: [, [Validators.required]]
     })
 
     this.filteredOptions = this.formularioAnuncio.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value || '')),
+      map(value => this._filter(value.nome || '')),
     );
 
     marcaService.obterMarcas().subscribe((marcaResponse: MarcaResponse[]) => {
@@ -59,16 +59,30 @@ export class AnunciarVeiculoComponent {
   }
 
   uploadFile(event: any) {
-    console.log(event.target.files[0])
+    this.formularioAnuncio.value.fotos = this.encodeImagemFileAsUrl(event.target.files);
+    console.log(this.formularioAnuncio.value.fotos)
   }
 
-  submeter(){
+  encodeImagemFileAsUrl(fileList : FileList) {
+    const encodedImages: (string | ArrayBuffer | null | undefined)[] = [];
+    for (let i = 0; i < fileList.length; i++){
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(fileList.item(i)!)
+      fileReader.onload = file => {
+        encodedImages.push(file.target?.result)
+      } 
+      
+    }
+    return encodedImages;
+  }
+
+  submeter() {
     this.anuncioRequest = {
       descricao: "teste",
-      tipoNegociacao: this.formularioAnuncio.value.negociacao,
+      tipoNegociacao: this.formularioAnuncio.value.tipoNegociacao,
       valor: this.formularioAnuncio.value.valor,
       fotos: this.formularioAnuncio.value.fotos,
-      veiculo : {
+      veiculo: {
         marca: this.formularioAnuncio.value.marca,
         modelo: this.formularioAnuncio.value.modelo,
         kmRodados: this.formularioAnuncio.value.quilometragem,
@@ -77,10 +91,10 @@ export class AnunciarVeiculoComponent {
         cor: this.formularioAnuncio.value.cor
       }
     }
-  
-   this.anuncioService.salvarAnuncio(this.anuncioRequest).subscribe(data => {
-    console.log(data);
-   })
+
+    console.log(this.anuncioRequest);
+
+    this.anuncioService.salvarAnuncio(this.anuncioRequest);
   }
 
 }
