@@ -30,15 +30,15 @@ export class AnunciarVeiculoComponent {
   constructor(private marcaService: MarcaService, private formBuilder: FormBuilder, private anuncioService: AnuncioServiceService) {
 
     this.formularioAnuncio = this.formBuilder.group({
-      marca: ['0d9c3406-a3cc-408b-9ab1-6ae9fd8b7c1b', [Validators.required]],
-      modelo: ['teste', [Validators.required]],
+      marca: ['Nissan', [Validators.required]],
+      modelo: ['Corolla XEi 2014', [Validators.required]],
       quilometragem: ['25000', [Validators.required]],
       ano: ['2014', [Validators.required]],
       combustivel: ['GASOLINA', [Validators.required]],
       cor: ['Preto', [Validators.required]],
       valor: ['40000', [Validators.required]],
       tipoNegociacao: ['VENDA', [Validators.required]],
-      fotos: [, [Validators.required]]
+      fotos: [[], [Validators.required]]
     })
 
     this.filteredOptions = this.formularioAnuncio.valueChanges.pipe(
@@ -59,23 +59,35 @@ export class AnunciarVeiculoComponent {
   }
 
   uploadFile(event: any) {
-    this.formularioAnuncio.value.fotos = this.encodeImagemFileAsUrl(event.target.files);
-    console.log(this.formularioAnuncio.value.fotos)
+    this.encodeImagemFileAsUrl(event.target.files).then((result) => {
+      this.formularioAnuncio.value.fotos = result;
+    });
   }
 
-  encodeImagemFileAsUrl(fileList : FileList) {
-    const encodedImages: (string | ArrayBuffer | null | undefined)[] = [];
-    for (let i = 0; i < fileList.length; i++){
+  async encodeImagemFileAsUrl(fileList: FileList): Promise<(string | ArrayBuffer | null)[]> {
+    const encodedImages: (string | ArrayBuffer | null)[] = [];
+    for (let i = 0; i < fileList.length; i++) {
       const fileReader = new FileReader();
-      fileReader.readAsDataURL(fileList.item(i)!)
-      fileReader.onload = file => {
-        encodedImages.push(file.target?.result)
-      } 
-      
+      const file = fileList.item(i);
+      if (file) {
+        const result = await new Promise<string | ArrayBuffer | null >((resolve, reject) => {
+          fileReader.onload = (event) => {
+            resolve(event.target?.result!);
+          };
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+          fileReader.readAsDataURL(file);
+        });
+        encodedImages.push(result);
+      }
     }
+
+    console.log(encodedImages)
     return encodedImages;
   }
-
+  
+  
   submeter() {
     this.anuncioRequest = {
       descricao: "teste",

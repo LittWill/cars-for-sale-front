@@ -1,83 +1,82 @@
 <div class="container">
 
- 
 
-<form class="form" [formGroup]="formularioAnuncio" (submit)="submeter()">
+
+  <form class="form" [formGroup]="formularioAnuncio" (submit)="submeter()">
 
     <h2>Abaixo, preencha as informações do seu veículo</h2>
-    
-    <mat-form-field class="example-full-width">
-        <mat-label>Marca</mat-label>
-        <input type="text" placeholder="Ex.: Toyota" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="marca">
-        <mat-autocomplete #auto="matAutocomplete">
-            @for (option of filteredOptions | async; track option) {
-            <mat-option class="option" [value]="option.id">
-                <span>{{option.nome}}</span>
-                <span><img width="48" height="48" src={{option.fotoUrl}} alt="" srcset=""></span>
-            </mat-option>
-            }
-        </mat-autocomplete>
+
+    <mat-form-field>
+      <mat-label>Marca</mat-label>
+      <mat-select formControlName="marca">
+        @for (marca of marcas; track marca) {
+        <mat-option [value]="marca.id" class="option">
+          <span>{{marca.nome}}</span>
+          <span><img width="48" height="48" src={{marca.foto}} alt="" srcset=""></span>
+        </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Modelo</mat-label>
-        <input matInput placeholder="Ex.: Corolla XEi 2014" formControlName="modelo">
+      <mat-label>Modelo</mat-label>
+      <input matInput placeholder="Ex.: Corolla XEi 2014" formControlName="modelo">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Quilometragem (km)</mat-label>
-        <input matInput type="number" placeholder="Ex.: 50.800 km"  formControlName="quilometragem">
+      <mat-label>Quilometragem (km)</mat-label>
+      <input matInput type="number" placeholder="Ex.: 50.800 km" formControlName="quilometragem">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>Ano</mat-label>
-        <input matInput placeholder="Ex.: 2014" formControlName="ano">
+      <mat-label>Ano</mat-label>
+      <input matInput placeholder="Ex.: 2014" formControlName="ano">
     </mat-form-field>
 
     <mat-form-field>
-        <mat-label>Combustível</mat-label>
-        <mat-select formControlName="combustivel" value="GASOLINA">
-          <mat-option value="GASOLINA">Gasolina</mat-option>
-          <mat-option value="FLEX">Flex</mat-option>
-          <mat-option value="DIESEL">Diesel</mat-option>
-          <mat-option value="HIBRIDO">Híbrido</mat-option>
-          <mat-option value="ELETRICO">Elétrico</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-label>Combustível</mat-label>
+      <mat-select formControlName="combustivel" value="GASOLINA">
+        <mat-option value="GASOLINA">Gasolina</mat-option>
+        <mat-option value="FLEX">Flex</mat-option>
+        <mat-option value="DIESEL">Diesel</mat-option>
+        <mat-option value="HIBRIDO">Híbrido</mat-option>
+        <mat-option value="ELETRICO">Elétrico</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Cor</mat-label>
-        <mat-select formControlName="cor" value="Preto">
-          <mat-option value="Preto">Preto</mat-option>
-          <mat-option value="Branco">Branco</mat-option>
-          <mat-option value="Cinza">Cinza</mat-option>
-          <mat-option value="Prata">Prata</mat-option>
-          <mat-option value="Amarelo">Amarelo</mat-option>
-          <mat-option value="Azul">Azul</mat-option>
-          <mat-option value="Verde">Verde</mat-option>
-          <mat-option value="Vermelho">Vermelho</mat-option>
-          <mat-option value="Laranja">Laranja</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cor</mat-label>
+      <mat-select formControlName="cor" value="Preto">
+        <mat-option value="Preto">Preto</mat-option>
+        <mat-option value="Branco">Branco</mat-option>
+        <mat-option value="Cinza">Cinza</mat-option>
+        <mat-option value="Prata">Prata</mat-option>
+        <mat-option value="Amarelo">Amarelo</mat-option>
+        <mat-option value="Azul">Azul</mat-option>
+        <mat-option value="Verde">Verde</mat-option>
+        <mat-option value="Vermelho">Vermelho</mat-option>
+        <mat-option value="Laranja">Laranja</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field floatLabel="always">
-        <mat-label>Valor</mat-label>
-        <input matInput type="number" class="example-right-align" placeholder="0" formControlName="valor">
-        <span matTextPrefix>R$&nbsp;</span>
-      </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Valor</mat-label>
+      <input matInput type="number" class="example-right-align" placeholder="0" formControlName="valor">
+      <span matTextPrefix>R$&nbsp;</span>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Desejo</mat-label>
-        <mat-select formControlName="tipoNegociacao" value="VENDA">
-          <mat-option value="VENDA">Venda</mat-option>
-          <mat-option value="TROCA">Troca</mat-option>
-          <mat-option value="AMBOS">Ambos</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>Desejo</mat-label>
+      <mat-select formControlName="tipoNegociacao" value="VENDA">
+        <mat-option value="VENDA">Venda</mat-option>
+        <mat-option value="TROCA">Troca</mat-option>
+        <mat-option value="AMBOS">Ambos</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <input type="file" multiple (change)="uploadFile($event)" formControlName="fotos">
+    <input type="file" multiple (change)="uploadFile($event)" formControlName="fotos">
 
-      <button type="submit">Anunciar</button>
+    <button type="submit">Anunciar</button>
 
-</form>
+  </form>
 </div>
